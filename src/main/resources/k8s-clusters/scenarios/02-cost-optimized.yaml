@@ -1,0 +1,83 @@
+# 02 — COST_OPTIMIZED placement under heterogeneous node pricing.
+#
+# Five nodes spanning three price tiers:
+#   - 2x cheap nodes  ($0.05/hr, 4 PE)   ← scheduler should fill these first
+#   - 2x mid-range    ($0.30/hr, 8 PE)
+#   - 1x premium      ($1.00/hr, 16 PE)  ← only used when cheaper tiers full
+#
+# Submitting 6 replicas (each 1 PE) should fully consume both cheap nodes
+# (2 + 2 = 4 pods) then spill 2 onto the mid-range tier; the premium node
+# stays empty because it's the most expensive.
+#
+# Pass criteria: placedPods=6, no pod lands on `premium-1`.
+
+cluster:
+  name: cost-optimized-mixed-pricing
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - name: cheap-1
+      pes: 4
+      mipsPerCore: 1000
+      ramMiB: 4096
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.05
+      labels: { node-role: general, instance-type: t3.medium }
+
+    - name: cheap-2
+      pes: 4
+      mipsPerCore: 1000
+      ramMiB: 4096
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.05
+      labels: { node-role: general, instance-type: t3.medium }
+
+    - name: midrange-1
+      pes: 8
+      mipsPerCore: 1200
+      ramMiB: 16384
+      rack: r2
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.30
+      labels: { node-role: general, instance-type: m5.2xlarge }
+
+    - name: midrange-2
+      pes: 8
+      mipsPerCore: 1200
+      ramMiB: 16384
+      rack: r2
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.30
+      labels: { node-role: general, instance-type: m5.2xlarge }
+
+    - name: premium-1
+      pes: 16
+      mipsPerCore: 1500
+      ramMiB: 65536
+      rack: r3
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 1.00
+      labels: { node-role: general, instance-type: m5.4xlarge }
+
+  workload:
+    deployments:
+      - name: api
+        namespace: default
+        replicas: 6
+        labels: { app: api }
+        cpuLoadProfile: STEADY_50
+        container:
+          image: api:1.0
+          cpu: "1"
+          memory: 512Mi
+          length: 100000

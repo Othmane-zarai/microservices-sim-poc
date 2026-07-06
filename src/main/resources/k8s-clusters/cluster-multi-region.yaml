@@ -1,0 +1,42 @@
+# TODO(4-VM): TODO-MULTIREGION — NOT YET EMPIRICALLY VALIDATED.
+#   Inter-region DR semantics cannot be measured from a single OCI region.
+#   Needs a multi-region cluster (e.g. GKE multi-cluster, Karmada).
+#   Simulator-only on current hardware. See deployment/EMPIRICAL_VALIDATION.md §9.
+#
+# Exercises VmAllocationPolicyTopologyAware.Policy.GEOGRAPHIC_SPREAD.
+#
+# Layout: 3 regions × 1 AZ × 2 nodes (6 nodes total). A 6-replica
+# Deployment should spread evenly: 2 pods per region.
+#
+# Note that GEOGRAPHIC_SPREAD scores by `region` only — within-region
+# placement is broken by remaining tiebreakers (cost / fit). The cost
+# is uniform here so any node within a region is acceptable.
+cluster:
+  name: multi-region-demo
+  scheduler:
+    policy: GEOGRAPHIC_SPREAD
+    k8sScoreScale: 0.05
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    # us-east-1
+    - { name: w-use-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-use-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    # us-west-2
+    - { name: w-usw-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-west-2a, region: us-west-2, costPerHour: 0.10 }
+    - { name: w-usw-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-west-2a, region: us-west-2, costPerHour: 0.10 }
+    # eu-central-1
+    - { name: w-euc-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: eu-central-1a, region: eu-central-1, costPerHour: 0.10 }
+    - { name: w-euc-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: eu-central-1a, region: eu-central-1, costPerHour: 0.10 }
+
+  workload:
+    deployments:
+      - name: edge
+        namespace: default
+        replicas: 6
+        labels: { app: edge }
+        cpuLoadProfile: STEADY_50
+        # cpu: "8" forces exactly 1 pod per node, so 6 pods fill all 6 nodes
+        # and the spread score has no slack — the result is a deterministic
+        # 2/2/2 distribution across regions.
+        container: { image: edge:1.0, cpu: "8", memory: 256Mi, length: 1000000 }

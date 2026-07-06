@@ -1,0 +1,42 @@
+# TODO(4-VM): TODO-RACK — NOT YET EMPIRICALLY VALIDATED.
+#   Needs ≥6 workers labelled across 3 racks; the Oracle k3s cluster
+#   has only 3 workers. Simulator-only on current hardware.
+#   See deployment/EMPIRICAL_VALIDATION.md §9 for the unlock condition.
+#
+# 03 — Rack-anti-affinity placement.
+#
+# Three racks, two nodes per rack (six nodes total). A 3-replica web
+# Deployment under RACK_ANTI_AFFINITY scoring should spread one replica
+# per rack so that a single rack failure cannot take the whole service
+# down. Confirms the topology-aware substrate's rack discriminator is
+# wired correctly to the K8s `app` label (replica-set discriminator).
+#
+# Pass criteria: placedPods=3, exactly one pod on a node in each of r1, r2, r3.
+
+cluster:
+  name: rack-anti-affinity
+  scheduler:
+    policy: RACK_ANTI_AFFINITY
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - { name: r1-a, pes: 8, ramMiB: 8192, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: r1-b, pes: 8, ramMiB: 8192, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: r2-a, pes: 8, ramMiB: 8192, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: r2-b, pes: 8, ramMiB: 8192, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: r3-a, pes: 8, ramMiB: 8192, rack: r3, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: r3-b, pes: 8, ramMiB: 8192, rack: r3, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+
+  workload:
+    deployments:
+      - name: web
+        namespace: default
+        replicas: 3
+        labels: { app: web, tier: frontend }
+        cpuLoadProfile: STEADY_50
+        container:
+          image: nginx:1.25
+          cpu: "1"
+          memory: 256Mi
+          length: 200000

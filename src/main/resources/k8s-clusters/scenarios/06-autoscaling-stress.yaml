@@ -1,0 +1,68 @@
+# Empirical fit on 4-VM (1 CP + 3 workers): HPA half is fully validated;
+# ClusterAutoscaler half is PARTIAL because Oracle k3s ships no built-in
+# CA — the real-cluster captures only `FailedScheduling` events as the
+# unschedulable signal (see TODO-CA-REAL in EMPIRICAL_VALIDATION.md §9).
+# Simulator-side runs the full CA round-trip.
+#
+# 06 — HPA + ClusterAutoscaler stress test.
+#
+# Three small starting nodes (4 PE × 8 GiB each), a web Deployment seeded
+# at 2 replicas under HIGH_90 sustained CPU load. The HPA target is 50%
+# CPU utilisation — well below the offered 90% — so the HPA scales out
+# replicas aggressively, exhausting the initial 12 PE. The
+# ClusterAutoscaler then provisions extra worker nodes from the
+# `auto-general` pool (up to 4 additional, 8 PE each) to absorb demand.
+#
+# Pass criteria:
+#   - HPA desiredReplicas climbs above 6 within 60 simulated seconds
+#   - ClusterAutoscaler provisions ≥1 extra node before saturation
+#   - placedPods grows over time as new nodes appear
+
+cluster:
+  name: autoscaling-stress
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - { name: seed-1, pes: 4, ramMiB: 8192, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: seed-2, pes: 4, ramMiB: 8192, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: seed-3, pes: 4, ramMiB: 8192, rack: r3, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+
+  workload:
+    deployments:
+      - name: web
+        namespace: default
+        replicas: 2
+        labels: { app: web, tier: frontend }
+        cpuLoadProfile: HIGH_90
+        container:
+          image: nginx:1.25
+          cpu: "1"
+          memory: 256Mi
+          length: 5000000          # long enough that HPA loop runs many cycles
+
+    autoscalers:
+      - kind: HPA
+        target: web
+        minReplicas: 2
+        maxReplicas: 30
+        cpuTargetUtilization: 0.5
+        cooldownSeconds: 5.0
+
+      - kind: ClusterAutoscaler
+        poolName: auto-general
+        minNodes: 0
+        maxNodes: 4
+        scaleDownAfterSeconds: 600.0
+        cooldownSeconds: 5.0
+        nodeTemplate:
+          pes: 8
+          mipsPerCore: 1000
+          ramMiB: 16384
+          rack: r1
+          zone: us-east-1a
+          region: us-east-1
+          costPerHour: 0.12
+          labels: { node-role: general, autoscaled: "true" }

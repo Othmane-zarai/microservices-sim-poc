@@ -1,0 +1,57 @@
+# TODO(4-VM): TODO-SATURATION — NOT YET EMPIRICALLY VALIDATED.
+#   Needs ≥10 workers + a real Cluster Autoscaler on k3s (not just
+#   FailedScheduling capture). Current cluster has 3 workers and no CA.
+#   Simulator-only on current hardware. See deployment/EMPIRICAL_VALIDATION.md §9.
+#
+# Diagnostic variant of cluster-10nodes.yaml with maxNodes=15 (vs 5).
+# Same workload, more autoscaler headroom — used to test whether the 40
+# unschedulable pods in the original run are caused by ClusterAutoscaler
+# saturation or by controller/HPA churn.
+cluster:
+  name: saturation-experiment
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.05
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - { name: w-r1-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-3, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-4, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-1, pes: 16, mipsPerCore: 1200, ramMiB: 32768, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.30 }
+    - { name: w-r2-2, pes: 16, mipsPerCore: 1200, ramMiB: 32768, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.30 }
+    - { name: w-r2-3, pes: 16, mipsPerCore: 1200, ramMiB: 32768, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.30 }
+
+  workload:
+    deployments:
+      - name: web
+        namespace: default
+        replicas: 3
+        labels: { app: web }
+        cpuLoadProfile: HIGH_90
+        container: { image: nginx:1.25, cpu: "2", memory: 256Mi, length: 1000000 }
+
+    autoscalers:
+      - kind: HPA
+        target: web
+        minReplicas: 3
+        maxReplicas: 50
+        cpuTargetUtilization: 0.5
+        cooldownSeconds: 5.0
+
+      # Generous maxNodes so the autoscaler is not the bottleneck.
+      - kind: ClusterAutoscaler
+        poolName: auto-general
+        minNodes: 0
+        maxNodes: 15
+        scaleDownAfterSeconds: 300.0
+        cooldownSeconds: 5.0
+        nodeTemplate:
+          pes: 8
+          mipsPerCore: 1000
+          ramMiB: 16384
+          rack: r1
+          zone: us-east-1a
+          region: us-east-1
+          costPerHour: 0.12

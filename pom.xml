@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.0</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.example</groupId>
+    <artifactId>cloudsimplus-k8s-examples</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>CloudSim Plus-K8s Examples</name>
+    <description>
+        Runnable examples for the CloudSim Plus Kubernetes orchestration
+        extension (org.cloudsimplus.kubernetes), driven through a headless
+        CLI runner. Companion artifact to the CloudSim Plus-K8s paper.
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>25</maven.compiler.release>
+        <java.version>25</java.version>
+        <!--<cloudsimplus.version>8.5.7</cloudsimplus.version>-->
+        <cloudsimplus.version>9.0.0-SNAPSHOT</cloudsimplus.version>
+    </properties>
+
+    <dependencies>
+        <!-- Web starter: REST API + SSE streaming for the React UI. Also
+             transitively provides the core Spring Boot context the CLI
+             runner (ApplicationRunner) relies on. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.cloudsimplus</groupId>
+            <artifactId>cloudsimplus</artifactId>
+            <version>${cloudsimplus.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.cspsim.CspSimApplication</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!--
+                      Exclude the @Tag("benchmark") performance sweep from `mvn test`.
+                      Run it explicitly via: mvn test -Dgroups=benchmark
+                      See: src/test/java/org/cloudsimplus/examples/kubernetes/scheduler/
+                           KubernetesSchedulerBenchmarkTest.java (USER_SIDE_QUESTS.md §B.1)
+                    -->
+                    <excludedGroups>benchmark</excludedGroups>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

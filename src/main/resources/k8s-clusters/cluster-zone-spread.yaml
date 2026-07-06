@@ -1,0 +1,41 @@
+# TODO(4-VM): TODO-ZONE — NOT YET EMPIRICALLY VALIDATED.
+#   Needs ≥6 workers across 3 OCI ADs; current Oracle k3s cluster has 3 workers
+#   in one region. Simulator-only on current hardware.
+#   See deployment/EMPIRICAL_VALIDATION.md §9 for the unlock condition.
+#
+# Exercises VmAllocationPolicyTopologyAware.Policy.AVAILABILITY_ZONE_SPREAD.
+#
+# Layout: 3 AZs (us-east-1a/1b/1c) × 2 nodes each, all in us-east-1.
+# A 6-replica Deployment should spread evenly: 2 pods per AZ.
+#
+# Why 6 replicas / 3 AZs: an even multiple gives the scheduler an
+# unambiguous "best" target — uneven counts would still spread but make
+# the test pass condition fuzzier.
+cluster:
+  name: zone-spread-demo
+  scheduler:
+    policy: AVAILABILITY_ZONE_SPREAD
+    k8sScoreScale: 0.05
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - { name: w-1a-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-1a-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-1b-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1b, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-1b-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1b, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-1c-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r3, zone: us-east-1c, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-1c-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r3, zone: us-east-1c, region: us-east-1, costPerHour: 0.10 }
+
+  workload:
+    deployments:
+      - name: api
+        namespace: default
+        replicas: 6
+        labels: { app: api }
+        cpuLoadProfile: STEADY_50
+        # cpu: "8" matches a node's full PE budget so each node holds exactly
+        # one pod. With 2 nodes per zone × 3 zones = 6 slots, the scheduler is
+        # forced to consume every node — and the spread score breaks ties so
+        # the second pod in each zone lands only after the first round of
+        # zones is filled. This produces the textbook 2/2/2 distribution.
+        container: { image: api:1.0, cpu: "8", memory: 512Mi, length: 1000000 }

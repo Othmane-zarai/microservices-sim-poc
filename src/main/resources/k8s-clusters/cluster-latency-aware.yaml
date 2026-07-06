@@ -1,0 +1,40 @@
+# TODO(4-VM): TODO-LATENCY-AWARE — NOT YET EMPIRICALLY VALIDATED.
+#   Needs ≥6 workers + Pingmesh-style RTT measurements; current Oracle k3s
+#   cluster has 3 workers in a single region. Simulator-only on current hardware.
+#   See deployment/EMPIRICAL_VALIDATION.md §9 for the unlock condition.
+#
+# Exercises VmAllocationPolicyTopologyAware.Policy.LATENCY_AWARE.
+#
+# Inverse of the spread policies: pods of the same replica set should
+# *cluster together* (same rack first, then same zone, then same region)
+# to minimize inter-pod latency. With a 4-replica Deployment and racks
+# that all have enough capacity, all four pods should land in the same
+# rack — typically whichever rack the first replica picked.
+#
+# Layout: 2 racks × 4 nodes (small enough that 4 replicas fit on a
+# single rack, so packing is feasible).
+cluster:
+  name: latency-aware-demo
+  scheduler:
+    policy: LATENCY_AWARE
+    k8sScoreScale: 0.05
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - { name: w-r1-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-3, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-4, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1b, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1b, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-3, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1b, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-4, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1b, region: us-east-1, costPerHour: 0.10 }
+
+  workload:
+    deployments:
+      - name: gossip
+        namespace: default
+        replicas: 4
+        labels: { app: gossip }
+        cpuLoadProfile: STEADY_50
+        container: { image: gossip:1.0, cpu: "1", memory: 256Mi, length: 1000000 }

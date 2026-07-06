@@ -1,0 +1,73 @@
+# TODO(4-VM): TODO-MULTIREGION — NOT YET EMPIRICALLY VALIDATED.
+#   Inter-region DR semantics cannot be measured from a single OCI region.
+#   Needs a multi-region cluster (e.g. GKE multi-cluster, Karmada).
+#   Simulator-only on current hardware.
+#   See deployment/EMPIRICAL_VALIDATION.md §9 for the unlock condition.
+#
+# 05 — Multi-region geographic spread.
+#
+# Three regions (us-east-1, us-west-2, eu-west-1), one node per region.
+# A 3-replica web Deployment under GEOGRAPHIC_SPREAD scoring distributes
+# replicas across all three regions for disaster-recovery semantics.
+#
+# Pass criteria: placedPods=3, one pod per region.
+
+cluster:
+  name: multi-region-dr
+  scheduler:
+    policy: GEOGRAPHIC_SPREAD
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - name: us-east-1-worker
+      pes: 16
+      mipsPerCore: 1500
+      ramMiB: 32768
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.50
+      labels:
+        topology.kubernetes.io/region: us-east-1
+        topology.kubernetes.io/zone: us-east-1a
+        node-role: general
+
+    - name: us-west-2-worker
+      pes: 16
+      mipsPerCore: 1500
+      ramMiB: 32768
+      rack: r1
+      zone: us-west-2a
+      region: us-west-2
+      costPerHour: 0.50
+      labels:
+        topology.kubernetes.io/region: us-west-2
+        topology.kubernetes.io/zone: us-west-2a
+        node-role: general
+
+    - name: eu-west-1-worker
+      pes: 16
+      mipsPerCore: 1500
+      ramMiB: 32768
+      rack: r1
+      zone: eu-west-1a
+      region: eu-west-1
+      costPerHour: 0.55
+      labels:
+        topology.kubernetes.io/region: eu-west-1
+        topology.kubernetes.io/zone: eu-west-1a
+        node-role: general
+
+  workload:
+    deployments:
+      - name: cdn-edge
+        namespace: default
+        replicas: 3
+        labels: { app: cdn-edge, tier: edge }
+        cpuLoadProfile: STEADY_50
+        container:
+          image: cdn-edge:1.5
+          cpu: "2"
+          memory: 1Gi
+          length: 300000

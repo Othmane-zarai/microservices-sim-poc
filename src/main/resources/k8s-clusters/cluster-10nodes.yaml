@@ -1,0 +1,227 @@
+# 10-node Kubernetes cluster topology for the YAML-driven example.
+#
+# Layout: 3 racks across 2 availability zones in 1 region.
+#   - Rack r1 / zone us-east-1a: 4 cheap general-purpose nodes
+#   - Rack r2 / zone us-east-1a: 3 mid-range nodes
+#   - Rack r3 / zone us-east-1b: 2 GPU nodes (tainted; only ML pods tolerate)
+#                                 + 1 cordoned node (kubectl-cordon equivalent)
+#
+# Used by `K8sClusterFromYamlExample` to validate three of the May 2026 fixes:
+#   • ClusterAutoscaler unschedulable detection      (when ML burst can't fit on GPU racks)
+#   • k8sScoreScale normalization                    (cost vs. NodeAffinity tradeoff)
+#   • UtilizationModelDynamic for HPA realism        (workload curve drives scale events)
+
+cluster:
+  name: research-cluster
+  scheduler:
+    policy: COST_OPTIMIZED          # one of LATENCY_AWARE | COST_OPTIMIZED | AVAILABILITY_ZONE_SPREAD | RACK_ANTI_AFFINITY | GEOGRAPHIC_SPREAD
+    k8sScoreScale: 0.05             # K8s score normalization vs parent topology score (0.01 = default; 1.0 = K8s dominant)
+  controllerTickIntervalSeconds: 1.0
+
+  # ---------- Worker nodes ----------
+  nodes:
+    # rack r1 — cheap general-purpose pool (us-east-1a)
+    - name: worker-r1-1
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 16384
+      bwMbps: 10000
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        kubernetes.io/hostname: worker-r1-1
+        topology.kubernetes.io/zone: us-east-1a
+        node-role: general
+        instance-type: m5.2xlarge
+    - name: worker-r1-2
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 16384
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        node-role: general
+        topology.kubernetes.io/zone: us-east-1a
+    - name: worker-r1-3
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 16384
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        node-role: general
+        topology.kubernetes.io/zone: us-east-1a
+    - name: worker-r1-4
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 16384
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        node-role: general
+        topology.kubernetes.io/zone: us-east-1a
+
+    # rack r2 — mid-range pool (us-east-1a)
+    - name: worker-r2-1
+      pes: 16
+      mipsPerCore: 1200
+      ramMiB: 32768
+      rack: r2
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.30
+      labels:
+        node-role: general
+        topology.kubernetes.io/zone: us-east-1a
+        instance-type: m5.4xlarge
+    - name: worker-r2-2
+      pes: 16
+      mipsPerCore: 1200
+      ramMiB: 32768
+      rack: r2
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.30
+      labels:
+        node-role: general
+        topology.kubernetes.io/zone: us-east-1a
+    - name: worker-r2-3
+      pes: 16
+      mipsPerCore: 1200
+      ramMiB: 32768
+      rack: r2
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.30
+      labels:
+        node-role: general
+        topology.kubernetes.io/zone: us-east-1a
+
+    # rack r3 — GPU pool (us-east-1b), tainted so only ML workloads land there
+    - name: gpu-r3-1
+      pes: 32
+      mipsPerCore: 2000
+      ramMiB: 65536
+      rack: r3
+      zone: us-east-1b
+      region: us-east-1
+      costPerHour: 1.20
+      labels:
+        node-role: gpu
+        topology.kubernetes.io/zone: us-east-1b
+        accelerator: nvidia-a10
+      taints:
+        - key: nvidia.com/gpu
+          value: "true"
+          effect: NO_SCHEDULE
+    - name: gpu-r3-2
+      pes: 32
+      mipsPerCore: 2000
+      ramMiB: 65536
+      rack: r3
+      zone: us-east-1b
+      region: us-east-1
+      costPerHour: 1.20
+      labels:
+        node-role: gpu
+        topology.kubernetes.io/zone: us-east-1b
+        accelerator: nvidia-a10
+      taints:
+        - key: nvidia.com/gpu
+          value: "true"
+          effect: NO_SCHEDULE
+
+    # rack r3 — cordoned node (drained, awaiting maintenance)
+    - name: maint-r3-1
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 16384
+      rack: r3
+      zone: us-east-1b
+      region: us-east-1
+      costPerHour: 0.05               # cheapest, but cordoned → must not receive pods
+      schedulable: false
+      labels:
+        node-role: maintenance
+        topology.kubernetes.io/zone: us-east-1b
+
+  # ---------- Workload (Deployments + autoscalers) ----------
+  workload:
+    deployments:
+      # General-purpose web tier — HPA-managed
+      - name: web
+        namespace: default
+        replicas: 3
+        labels:
+          app: web
+          tier: frontend
+        # Each replica's CPU usage follows a sustained-90% curve so the HPA
+        # actually scales (vs. UtilizationModelFull which just reports 100%
+        # then 0%).
+        cpuLoadProfile: HIGH_90       # one of HIGH_90 | STEADY_50 | BURSTY | IDLE_15
+        container:
+          image: nginx:1.25
+          # cpu: "2" requests 2 PE per pod. With 4 r1 nodes (8 PE each) and
+          # 3 r2 nodes (16 PE each) = 80 PE schedulable for general pods, the
+          # cluster fits ~40 web replicas. With maxReplicas=50 below, HPA
+          # exhausts capacity → ClusterAutoscaler must provision more nodes.
+          cpu: "2"
+          memory: 256Mi
+          length: 1000000             # MI; long-running so HPA loop runs many cycles
+
+      # ML training — required NodeAffinity to GPU pool, tolerates GPU taint
+      - name: ml-trainer
+        namespace: ml
+        replicas: 1
+        labels:
+          app: ml-trainer
+          tier: training
+        nodeAffinity:
+          required:
+            - key: node-role
+              operator: In
+              values: [gpu]
+        tolerations:
+          - key: nvidia.com/gpu
+            operator: Exists
+            effect: NO_SCHEDULE
+        cpuLoadProfile: STEADY_50
+        container:
+          image: pytorch:2.0
+          cpu: 4
+          memory: 8Gi
+          length: 1000000
+
+    autoscalers:
+      # HPA on the web Deployment — should scale up under HIGH_90 load.
+      - kind: HPA
+        target: web
+        minReplicas: 3
+        maxReplicas: 50
+        cpuTargetUtilization: 0.5
+        cooldownSeconds: 5.0
+
+      # Cluster Autoscaler — provisions general-purpose pool nodes when the
+      # web Deployment scale-up exhausts current capacity.
+      - kind: ClusterAutoscaler
+        poolName: auto-general
+        minNodes: 0
+        maxNodes: 5
+        scaleDownAfterSeconds: 300.0
+        cooldownSeconds: 5.0
+        nodeTemplate:
+          pes: 8
+          mipsPerCore: 1000
+          ramMiB: 16384
+          rack: r1
+          zone: us-east-1a
+          region: us-east-1
+          costPerHour: 0.12

@@ -1,0 +1,84 @@
+# 07 — Mixed workloads with NodeAffinity, taints, and tolerations.
+#
+# Two workloads share the cluster:
+#   - web (default namespace)        — runs on any general-purpose node
+#   - ml-trainer (ml namespace)      — REQUIRED nodeAffinity to gpu nodes,
+#                                      tolerates the gpu NoSchedule taint
+#
+# Topology: 4 general nodes (rack r1+r2) + 2 GPU nodes (rack r3, tainted).
+# Web replicas must avoid GPU nodes (no toleration ⇒ NO_SCHEDULE blocks
+# them). ML replicas must land on GPU nodes (required nodeAffinity) and
+# explicitly tolerate the taint.
+#
+# Pass criteria:
+#   - All 5 web replicas placed on general nodes (rack r1 or r2)
+#   - Both ml-trainer replicas placed on gpu nodes (rack r3)
+#   - Zero unschedulable pods
+
+cluster:
+  name: mixed-web-and-ml
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.05               # let nodeAffinity preferred influence cost slightly
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    # General-purpose pool
+    - { name: gen-r1-1, pes: 8, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: gen-r1-2, pes: 8, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: gen-r2-1, pes: 8, ramMiB: 16384, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+    - { name: gen-r2-2, pes: 8, ramMiB: 16384, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { node-role: general } }
+
+    # GPU pool — tainted so only ML pods land here
+    - name: gpu-r3-1
+      pes: 32
+      mipsPerCore: 2000
+      ramMiB: 65536
+      rack: r3
+      zone: us-east-1b
+      region: us-east-1
+      costPerHour: 1.20
+      labels: { node-role: gpu, accelerator: nvidia-a10 }
+      taints:
+        - { key: nvidia.com/gpu, value: "true", effect: NO_SCHEDULE }
+
+    - name: gpu-r3-2
+      pes: 32
+      mipsPerCore: 2000
+      ramMiB: 65536
+      rack: r3
+      zone: us-east-1b
+      region: us-east-1
+      costPerHour: 1.20
+      labels: { node-role: gpu, accelerator: nvidia-a10 }
+      taints:
+        - { key: nvidia.com/gpu, value: "true", effect: NO_SCHEDULE }
+
+  workload:
+    deployments:
+      - name: web
+        namespace: default
+        replicas: 5
+        labels: { app: web, tier: frontend }
+        cpuLoadProfile: STEADY_50
+        container:
+          image: nginx:1.25
+          cpu: "1"
+          memory: 256Mi
+          length: 200000
+
+      - name: ml-trainer
+        namespace: ml
+        replicas: 2
+        labels: { app: ml-trainer, tier: training }
+        nodeAffinity:
+          required:
+            - { key: node-role, operator: In, values: [gpu] }
+        tolerations:
+          - { key: nvidia.com/gpu, operator: Exists, effect: NO_SCHEDULE }
+        cpuLoadProfile: STEADY_50
+        container:
+          image: pytorch:2.1
+          cpu: "4"
+          memory: 8Gi
+          length: 500000

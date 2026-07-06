@@ -1,0 +1,72 @@
+# 01 — Baseline smoke test.
+#
+# Smallest realistic scenario: 3 cheap general-purpose nodes, one Deployment
+# of 3 nginx replicas. With 8 PE per node and a 500m CPU request per
+# replica, the cluster is far from saturated; expect every replica to land
+# (no unschedulable pods) and one replica per rack under COST_OPTIMIZED
+# placement (uniform cost ⇒ E5 lexical tie-break breaks ties deterministically
+# and the parent topology score spreads across racks).
+#
+# Pass criteria: placedPods=3, unschedulablePods=0, simEndClock>=60.
+
+cluster:
+  name: baseline-3-node
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - name: worker-1
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 8192
+      rack: r1
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        kubernetes.io/hostname: worker-1
+        topology.kubernetes.io/zone: us-east-1a
+        node-role: general
+
+    - name: worker-2
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 8192
+      rack: r2
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        kubernetes.io/hostname: worker-2
+        topology.kubernetes.io/zone: us-east-1a
+        node-role: general
+
+    - name: worker-3
+      pes: 8
+      mipsPerCore: 1000
+      ramMiB: 8192
+      rack: r3
+      zone: us-east-1a
+      region: us-east-1
+      costPerHour: 0.10
+      labels:
+        kubernetes.io/hostname: worker-3
+        topology.kubernetes.io/zone: us-east-1a
+        node-role: general
+
+  workload:
+    deployments:
+      - name: web
+        namespace: default
+        replicas: 3
+        labels:
+          app: web
+          tier: frontend
+        cpuLoadProfile: STEADY_50
+        container:
+          image: nginx:1.25
+          cpu: 500m
+          memory: 256Mi
+          length: 100000

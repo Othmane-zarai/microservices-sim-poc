@@ -1,0 +1,44 @@
+# TODO(4-VM): TODO-ZONE — NOT YET EMPIRICALLY VALIDATED.
+#   Needs ≥6 workers across 3 OCI ADs; the current cluster has 3 workers
+#   in one region. Simulator-only on current hardware.
+#   See deployment/EMPIRICAL_VALIDATION.md §9 for the unlock condition.
+#
+# 04 — Availability-zone spread.
+#
+# Three availability zones (us-east-1a / 1b / 1c) within a single region.
+# Each AZ has two nodes; a 6-replica Deployment under
+# AVAILABILITY_ZONE_SPREAD scoring should distribute two replicas per AZ,
+# providing zone-failure tolerance.
+#
+# Pass criteria: placedPods=6, two pods per AZ.
+
+cluster:
+  name: zone-spread
+  scheduler:
+    policy: AVAILABILITY_ZONE_SPREAD
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    # Zone A
+    - { name: az-a-1, pes: 8, ramMiB: 8192, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { topology.kubernetes.io/zone: us-east-1a, node-role: general } }
+    - { name: az-a-2, pes: 8, ramMiB: 8192, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10, labels: { topology.kubernetes.io/zone: us-east-1a, node-role: general } }
+    # Zone B
+    - { name: az-b-1, pes: 8, ramMiB: 8192, rack: r3, zone: us-east-1b, region: us-east-1, costPerHour: 0.10, labels: { topology.kubernetes.io/zone: us-east-1b, node-role: general } }
+    - { name: az-b-2, pes: 8, ramMiB: 8192, rack: r4, zone: us-east-1b, region: us-east-1, costPerHour: 0.10, labels: { topology.kubernetes.io/zone: us-east-1b, node-role: general } }
+    # Zone C
+    - { name: az-c-1, pes: 8, ramMiB: 8192, rack: r5, zone: us-east-1c, region: us-east-1, costPerHour: 0.10, labels: { topology.kubernetes.io/zone: us-east-1c, node-role: general } }
+    - { name: az-c-2, pes: 8, ramMiB: 8192, rack: r6, zone: us-east-1c, region: us-east-1, costPerHour: 0.10, labels: { topology.kubernetes.io/zone: us-east-1c, node-role: general } }
+
+  workload:
+    deployments:
+      - name: api
+        namespace: default
+        replicas: 6
+        labels: { app: api, tier: backend }
+        cpuLoadProfile: STEADY_50
+        container:
+          image: api:2.0
+          cpu: "1"
+          memory: 512Mi
+          length: 200000

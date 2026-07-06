@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This file MUST be named logback.xml (not logback-spring.xml): the cloudsimplus
+  dependency jar bundles its own logback.xml (root=DEBUG). Spring Boot treats the
+  first logback.xml found on the classpath as its self-initialization config and
+  then ignores logback-spring.xml entirely. In the fat jar (and under mvn/IDE)
+  BOOT-INF/classes precedes BOOT-INF/lib, so THIS file wins over the dependency's
+  — but only because it is also named logback.xml.
+
+  CloudSim Plus names its loggers by simple class name (e.g. "DatacenterSimple"),
+  not under a package prefix, so the engine can only be quieted at the ROOT
+  level. We keep this project's own loggers (com.example.cspsim) at INFO so the
+  CLI runner's status lines still show; each example's narrative prints via
+  System.out and is unaffected by log levels.
+-->
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%highlight(%-5level) %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.example.cspsim" level="INFO"/>
+    <!-- Show the Spring Boot startup banner + "Tomcat started on port 8080". -->
+    <logger name="org.springframework.boot.web.embedded.tomcat" level="INFO"/>
+    <logger name="org.springframework.boot.StartupInfoLogger" level="INFO"/>
+
+    <!-- Engine quiet by default; raise to INFO/DEBUG for event tracing. -->
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

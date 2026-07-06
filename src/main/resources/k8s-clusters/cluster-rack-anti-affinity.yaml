@@ -1,0 +1,39 @@
+# TODO(4-VM): TODO-RACK — NOT YET EMPIRICALLY VALIDATED.
+#   Needs ≥8 workers across 4 racks; current Oracle k3s cluster has 3 workers.
+#   Simulator-only on current hardware. See deployment/EMPIRICAL_VALIDATION.md §9.
+#
+# Exercises VmAllocationPolicyTopologyAware.Policy.RACK_ANTI_AFFINITY.
+#
+# Layout: 4 racks × 2 nodes (8 nodes total), single AZ. A 4-replica
+# Deployment forces the scheduler to spread one pod per rack — if it
+# packed pods onto fewer racks the spread score would drop.
+#
+# Expected placement: web-0..3 each on a different rack (r1, r2, r3, r4),
+# regardless of which specific node within a rack. With cost ties broken
+# by spread score and `k8sScoreScale: 0.05` keeping K8s preferred-affinity
+# from interfering, the topology score dominates.
+cluster:
+  name: rack-anti-affinity-demo
+  scheduler:
+    policy: RACK_ANTI_AFFINITY
+    k8sScoreScale: 0.05
+  controllerTickIntervalSeconds: 1.0
+
+  nodes:
+    - { name: w-r1-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r1-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r1, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r2-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r2, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r3-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r3, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r3-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r3, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r4-1, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r4, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+    - { name: w-r4-2, pes: 8, mipsPerCore: 1000, ramMiB: 16384, rack: r4, zone: us-east-1a, region: us-east-1, costPerHour: 0.10 }
+
+  workload:
+    deployments:
+      - name: web
+        namespace: default
+        replicas: 4
+        labels: { app: web }
+        cpuLoadProfile: STEADY_50      # constant 50% — no HPA needed
+        container: { image: nginx:1.25, cpu: "1", memory: 256Mi, length: 1000000 }

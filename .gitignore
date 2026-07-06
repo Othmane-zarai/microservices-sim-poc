@@ -1,0 +1,76 @@
+# ──────────────────────────────────────────────────────────────
+# microservices-sim-poc — companion artifact for CloudSim Plus-K8s
+#
+# NOTE: the empirical artefacts under deployment/ (real-vs-sim CSVs,
+# captured run logs, manifests) are intentionally tracked — they back
+# the paper's Data Availability Statement. Log/output ignores below are
+# scoped to the repository ROOT only so they never catch those.
+# ──────────────────────────────────────────────────────────────
+
+# ── Java / Maven ──
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+dependency-reduced-pom.xml
+.flattened-pom.xml
+
+# ── Node / frontend ──
+node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+npm-debug.log*
+yarn-error.log*
+
+# ── Python (comparison-scripts) ──
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+
+# ── LaTeX build artifacts (paper/) — scoped to paper/ so deployment
+#    artefact logs/CSVs are never caught ──
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.synctex.gz
+paper/*.toc
+paper/*.lof
+paper/*.lot
+paper/*.pag
+paper/*.log
+paper/*.pdf
+
+# ── Stray root-level run output (build/run scratch, NOT artefacts) ──
+/*.out
+/*.err
+/*.log
+/sim_output.log
+/b.out
+/b.err
+/server.out
+/server.err
+
+# ── IDE / editor ──
+.idea/
+*.iml
+*.ipr
+*.iws
+/shelf/
+/httpRequests/
+/queries/
+/dataSources/
+/dataSources.local.xml
+.vscode/
+*.swp
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Claude Code ──
+.claude/
