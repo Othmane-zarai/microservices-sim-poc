@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the paper and this archived snapshot."
+title: "microservices-sim-poc: Worked examples and CLI runner for CloudSim Plus-K8s"
+abstract: >-
+  Runnable Kubernetes worked examples (org.cloudsimplus.examples.kubernetes) and a
+  headless CLI/REST runner accompanying the paper "CloudSim Plus-K8s: A
+  Contract-Driven Extension for Kubernetes Container Orchestration Simulation."
+  Exercises the org.cloudsimplus.kubernetes extension.
+type: software
+authors:
+  - family-names: Zarai
+    given-names: Othmane
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+  - family-names: Ettazi
+    given-names: Widad
+  - family-names: Driss
+    given-names: Riane
+version: 1.0.0
+date-released: "2026-07-07"
+license: Apache-2.0
+repository-code: "https://github.com/Othmane-zarai/microservices-sim-poc"
+keywords:
+  - CloudSim Plus
+  - Kubernetes
+  - discrete-event simulation
+  - container orchestration
+  - worked examples
+  - reproducibility
+references:
+  - type: software
+    title: "CloudSim Plus-K8s: Kubernetes container-orchestration extension for CloudSim Plus"
+    authors:
+      - family-names: Zarai
+        given-names: Othmane
+    repository-code: "https://github.com/Othmane-zarai/cloudsimplus-k8s"
