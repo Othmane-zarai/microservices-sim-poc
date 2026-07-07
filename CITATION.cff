@@ -3,9 +3,12 @@ message: "If you use this software, please cite both the paper and this archived
 title: "microservices-sim-poc: Worked examples and CLI runner for CloudSim Plus-K8s"
 abstract: >-
   Runnable Kubernetes worked examples (org.cloudsimplus.examples.kubernetes) and a
-  headless CLI/REST runner accompanying the paper "CloudSim Plus-K8s: A
-  Contract-Driven Extension for Kubernetes Container Orchestration Simulation."
-  Exercises the org.cloudsimplus.kubernetes extension.
+  headless CLI runner, plus the RQ1-RQ4 and Online Boutique reproducibility kit
+  (deployment captures, comparator scripts, and LaTeX paper sources), accompanying
+  the paper "CloudSim Plus-K8s: A Contract-Driven Extension for Kubernetes
+  Container Orchestration Simulation." Exercises the org.cloudsimplus.kubernetes
+  extension. Code is GPL-3.0-or-later; the empirical data and paper sources are
+  CC-BY-4.0 (see LICENSE-DATA).
 type: software
 authors:
   - family-names: Zarai
@@ -17,7 +20,7 @@ authors:
     given-names: Riane
 version: 1.0.0
 date-released: "2026-07-07"
-license: Apache-2.0
+license: GPL-3.0-or-later
 repository-code: "https://github.com/Othmane-zarai/microservices-sim-poc"
 keywords:
   - CloudSim Plus

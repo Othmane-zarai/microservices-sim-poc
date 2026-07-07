@@ -1,8 +1,8 @@
 {
-  "title": "microservices-sim-poc: Worked examples and headless CLI runner for CloudSim Plus-K8s",
-  "description": "Runnable Kubernetes worked examples (org.cloudsimplus.examples.kubernetes) and a headless CLI/REST runner accompanying the paper \"CloudSim Plus-K8s: A Contract-Driven Extension for Kubernetes Container Orchestration Simulation.\" Exercises the org.cloudsimplus.kubernetes extension (https://github.com/Othmane-zarai/cloudsimplus-k8s).",
+  "title": "microservices-sim-poc: Worked examples, CLI runner, and reproducibility kit for CloudSim Plus-K8s",
+  "description": "Runnable Kubernetes worked examples (org.cloudsimplus.examples.kubernetes) and a headless CLI runner, plus the RQ1-RQ4 and Online Boutique reproducibility kit (deployment captures, comparator scripts, and LaTeX paper sources), accompanying the paper \"CloudSim Plus-K8s: A Contract-Driven Extension for Kubernetes Container Orchestration Simulation.\" Exercises the org.cloudsimplus.kubernetes extension (https://github.com/Othmane-zarai/cloudsimplus-k8s). Code is GPL-3.0-or-later; the empirical data and paper sources are CC-BY-4.0 (see LICENSE-DATA).",
   "upload_type": "software",
-  "license": "Apache-2.0",
+  "license": "GPL-3.0-or-later",
   "access_right": "open",
   "version": "1.0.0",
   "creators": [

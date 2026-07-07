@@ -1,0 +1,4 @@
+endpoint,percentile,real_ms,sim_ms,ratio
+web,50,1.00,0.01,0.014
+web,95,4.25,0.01,0.003
+web,99,28.25,0.01,0.000

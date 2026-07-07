@@ -1,0 +1,181 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
+[34mINFO  Starting CspSimApplication v1.0.0-SNAPSHOT using Java 25.0.1 with PID 18944 (C:\Users\Administrator\Documents\microservices-sim-poc\target\csp-examples-springboot-1.0.0-SNAPSHOT.jar started by Administrator in C:\Users\Administrator\Documents\microservices-sim-poc)
+[0;39m[34mINFO  No active profile set, falling back to 1 default profile: "default"
+[0;39m[34mINFO  Tomcat initialized with port 9092 (http)
+[0;39m[34mINFO  Initializing ProtocolHandler ["http-nio-9092"]
+[0;39m[34mINFO  Starting service [Tomcat]
+[0;39m[34mINFO  Starting Servlet engine: [Apache Tomcat/10.1.41]
+[0;39m[34mINFO  Initializing Spring embedded WebApplicationContext
+[0;39m[34mINFO  Root WebApplicationContext: initialization completed in 2739 ms
+[0;39m[34mINFO  Adding welcome page template: index
+[0;39m[34mINFO  Starting ProtocolHandler ["http-nio-9092"]
+[0;39m[34mINFO  Tomcat started on port 9092 (http) with context path '/'
+[0;39m[34mINFO  Started CspSimApplication in 4.675 seconds (process running for 5.463)
+[0;39m[34mINFO  Running CloudSim Plus example org.cloudsimplus.examples.kubernetes.K8sClusterFromYamlExample
+[0;39m╔══════════════════════════════════════════════════════════╗
+║   K8s Cluster from YAML  —  Topology + workload from file ║
+╚══════════════════════════════════════════════════════════╝
+  Goal : Load a complete cluster topology, workload, and autoscalers from YAML.
+  Tests: YAML parsing; HPA scaling under dynamic load; ClusterAutoscaler growth.
+  Knobs: config=deployment/rq1/scenarios/06-autoscaling-stress.yaml  cluster=autoscaling-stress  nodes=3  duration=120.0s
+
+[34mINFO  0.00: ControllerManager: registered ReplicaSet 'web-v1' (uid=2)
+[0;39m[34mINFO  0.00: ControllerManager: registered Deployment 'web' (uid=1)
+[0;39m[34mINFO  
+================== Starting CloudSim Plus 9.0.0 ==================
+
+[0;39m[34mINFO  0.00: #Datacenter 1 is starting...
+[0;39m[34mINFO  Broker 2 is starting...
+[0;39m[34mINFO  Entities started.
+[0;39m[34mINFO  0.00: KubernetesClusterBroker2: List of 1 datacenters(s) received.
+[0;39m[34mINFO  1.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-0' (current=1, desired=2)
+[0;39m[34mINFO  1.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  1.00: KubernetesClusterBroker2: Trying to create Pod[default/web-0] inside #Datacenter 1
+[0;39m[34mINFO  1.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-1' (current=2, desired=2)
+[0;39m[34mINFO  1.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  1.00: KubernetesClusterBroker2: Trying to create Pod[default/web-1] inside #Datacenter 1
+[0;39m[34mINFO  1.00: KubernetesNode: Pod[default/web-0] is booting up right away in KubernetesNode[seed-1], since no startup delay (boot time) was set.
+[0;39m[34mINFO  1.00: KubernetesScheduler: Pod[default/web-0] has been allocated to KubernetesNode[seed-1]
+[0;39m[34mINFO  1.00: KubernetesNode: Pod[default/web-1] is booting up right away in KubernetesNode[seed-2], since no startup delay (boot time) was set.
+[0;39m[34mINFO  1.00: KubernetesScheduler: Pod[default/web-1] has been allocated to KubernetesNode[seed-2]
+[0;39m[34mINFO  1.10: kubelet: starting pod 'Pod[default/web-0]' on KubernetesNode[seed-1] (1 container(s))
+[0;39m[34mINFO  1.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  1.10: kubelet: starting pod 'Pod[default/web-1]' on KubernetesNode[seed-2] (1 container(s))
+[0;39m[34mINFO  1.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  1.10: KubernetesClusterBroker2: Sending Cloudlet 0 to Pod[default/web-0] inside KubernetesNode[seed-1].
+[0;39m[34mINFO  1.10: KubernetesClusterBroker2: Sending Cloudlet 1 to Pod[default/web-1] inside KubernetesNode[seed-2].
+[0;39m[34mINFO  1.10: KubernetesClusterBroker2: All 2 waiting Cloudlets submitted to some VM.
+[0;39m[34mINFO  2.00: HPA 'web-hpa': avg CPU=100.0%, replicas 2 -> 4
+[0;39m[34mINFO  3.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-2' (current=3, desired=4)
+[0;39m[34mINFO  3.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  3.00: KubernetesClusterBroker2: Trying to create Pod[default/web-2] inside #Datacenter 1
+[0;39m[34mINFO  3.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-3' (current=4, desired=4)
+[0;39m[34mINFO  3.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  3.00: KubernetesClusterBroker2: Trying to create Pod[default/web-3] inside #Datacenter 1
+[0;39m[34mINFO  3.00: KubernetesNode: Pod[default/web-2] is booting up right away in KubernetesNode[seed-3], since no startup delay (boot time) was set.
+[0;39m[34mINFO  3.00: KubernetesScheduler: Pod[default/web-2] has been allocated to KubernetesNode[seed-3]
+[0;39m[34mINFO  3.00: KubernetesNode: Pod[default/web-3] is booting up right away in KubernetesNode[seed-1], since no startup delay (boot time) was set.
+[0;39m[34mINFO  3.00: KubernetesScheduler: Pod[default/web-3] has been allocated to KubernetesNode[seed-1]
+[0;39m[34mINFO  3.10: kubelet: starting pod 'Pod[default/web-2]' on KubernetesNode[seed-3] (1 container(s))
+[0;39m[34mINFO  3.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  3.10: kubelet: starting pod 'Pod[default/web-3]' on KubernetesNode[seed-1] (1 container(s))
+[0;39m[34mINFO  3.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  3.10: KubernetesClusterBroker2: Sending Cloudlet 2 to Pod[default/web-2] inside KubernetesNode[seed-3].
+[0;39m[34mINFO  3.10: KubernetesClusterBroker2: Sending Cloudlet 3 to Pod[default/web-3] inside KubernetesNode[seed-1].
+[0;39m[34mINFO  3.10: KubernetesClusterBroker2: All 2 waiting Cloudlets submitted to some VM.
+[0;39m[34mINFO  7.00: HPA 'web-hpa': avg CPU=87.5%, replicas 4 -> 7
+[0;39m[34mINFO  8.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-4' (current=5, desired=7)
+[0;39m[34mINFO  8.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  8.00: KubernetesClusterBroker2: Trying to create Pod[default/web-4] inside #Datacenter 1
+[0;39m[34mINFO  8.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-5' (current=6, desired=7)
+[0;39m[34mINFO  8.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  8.00: KubernetesClusterBroker2: Trying to create Pod[default/web-5] inside #Datacenter 1
+[0;39m[34mINFO  8.00: ReplicaSet 'web-v1' (uid=2) submitting pod 'web-6' (current=7, desired=7)
+[0;39m[34mINFO  8.00: KubernetesClusterBroker2: List of 1 VMs submitted to the broker during simulation execution. VMs creation request sent to Datacenter.
+[0;39m[34mINFO  8.00: KubernetesClusterBroker2: Trying to create Pod[default/web-6] inside #Datacenter 1
+[0;39m[34mINFO  8.00: KubernetesNode: Pod[default/web-4] is booting up right away in KubernetesNode[seed-2], since no startup delay (boot time) was set.
+[0;39m[34mINFO  8.00: KubernetesScheduler: Pod[default/web-4] has been allocated to KubernetesNode[seed-2]
+[0;39m[34mINFO  8.00: KubernetesNode: Pod[default/web-5] is booting up right away in KubernetesNode[seed-3], since no startup delay (boot time) was set.
+[0;39m[34mINFO  8.00: KubernetesScheduler: Pod[default/web-5] has been allocated to KubernetesNode[seed-3]
+[0;39m[34mINFO  8.00: KubernetesNode: Pod[default/web-6] is booting up right away in KubernetesNode[seed-1], since no startup delay (boot time) was set.
+[0;39m[34mINFO  8.00: KubernetesScheduler: Pod[default/web-6] has been allocated to KubernetesNode[seed-1]
+[0;39m[34mINFO  8.10: kubelet: starting pod 'Pod[default/web-4]' on KubernetesNode[seed-2] (1 container(s))
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  8.10: kubelet: starting pod 'Pod[default/web-5]' on KubernetesNode[seed-3] (1 container(s))
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  8.10: kubelet: starting pod 'Pod[default/web-6]' on KubernetesNode[seed-1] (1 container(s))
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: List of 1 Cloudlets submitted to the broker during simulation execution.
+[0;39m[34mINFO  Cloudlets creation request sent to Datacenter.
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: Sending Cloudlet 4 to Pod[default/web-4] inside KubernetesNode[seed-2].
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: Sending Cloudlet 5 to Pod[default/web-5] inside KubernetesNode[seed-3].
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: Sending Cloudlet 6 to Pod[default/web-6] inside KubernetesNode[seed-1].
+[0;39m[34mINFO  8.10: KubernetesClusterBroker2: All 3 waiting Cloudlets submitted to some VM.
+[0;39m[34mINFO  121.00: Processing last events before simulation shutdown.
+[0;39m[34mINFO  121.00: KubernetesClusterBroker2 is shutting down...
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-6] destruction on KubernetesNode[seed-1]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-5] destruction on KubernetesNode[seed-3]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-4] destruction on KubernetesNode[seed-2]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-3] destruction on KubernetesNode[seed-1]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-2] destruction on KubernetesNode[seed-3]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-1] destruction on KubernetesNode[seed-2]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: KubernetesPod: Requesting Pod[default/web-0] destruction on KubernetesNode[seed-1]. Shutdown will finish immediately (since no Vm shutDownDelay was set).
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-6] destroyed on KubernetesNode[seed-1]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-5] destroyed on KubernetesNode[seed-3]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-4] destroyed on KubernetesNode[seed-2]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-3] destroyed on KubernetesNode[seed-1]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-2] destroyed on KubernetesNode[seed-3]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-1] destroyed on KubernetesNode[seed-2]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  121.00: #Datacenter 1: Pod[default/web-0] destroyed on KubernetesNode[seed-1]. It had a total of 1 cloudlets (running + waiting). Some events may have been missed. You can try:
+(a) decreasing CloudSim's minTimeBetweenEvents and/or Datacenter's schedulingInterval attribute;
+(b) increasing broker's Vm destruction delay for idle VMs if you set it to zero;
+(c) defining Cloudlets with smaller length (your Datacenter's scheduling interval may be smaller than the time to finish some Cloudlets).
+
+[0;39m[34mINFO  Simulation: No more future events
+
+[0;39m[34mINFO  CloudInformationService0: Notify all CloudSim Plus entities to shutdown.
+
+[0;39m[34mINFO  
+================== Simulation finished at time 201.00, before completing, in reason of an explicit request to terminate() or terminateAt() ==================
+
+[0;39m  Final cluster snapshot:
+  ─────────────────────────────────────────────────────────
+  cluster=autoscaling-stress  nodes=3  pods=7  unschedulable=0
+
+  Deployment desired-replica counts (post-HPA):
+    web              desiredReplicas=7
+
+  Pod → node placement:
+  POD                NAMESPACE  NODE           RACK
+  ─────────────────────────────────────────────────────────
+  web-0              default    seed-1         r1
+  web-3              default    seed-1         r1
+  web-6              default    seed-1         r1
+  web-1              default    seed-2         r2
+  web-4              default    seed-2         r2
+  web-2              default    seed-3         r3
+  web-5              default    seed-3         r3
+  ─────────────────────────────────────────────────────────
+  Sim clock : 120.00s   wall: 119 ms
+
+❌ VALIDATION FAILED: placement=ok  hpa=ok  ca=FAIL (no extra nodes provisioned)  placedPods=7/2  unschedulable=0
+[34mINFO  Example K8sClusterFromYamlExample finished in 281 ms (success=true)
+[0;39m

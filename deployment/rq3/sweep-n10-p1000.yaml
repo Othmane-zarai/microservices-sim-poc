@@ -1,0 +1,29 @@
+# RQ3 sweep: nodes=10 pods=1000
+cluster:
+  name: rq3-n10-p1000
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+  nodes:
+    - { name: n00000, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00001, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00002, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00003, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00004, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00005, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00006, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00007, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00008, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00009, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+  workload:
+    deployments:
+      - name: bench
+        namespace: default
+        replicas: 1000
+        cpuLoadProfile: STEADY_50
+        container:
+          image: registry.k8s.io/pause:3.9
+          cpu: "100m"
+          memory: "128Mi"
+          length: 1000

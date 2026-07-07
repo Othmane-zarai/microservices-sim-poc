@@ -1,0 +1,72 @@
+# RQ1 scenario: s051 (matches real-manifests/s051.yaml)
+# scenario_seed: 4278308761
+cluster:
+  name: rq1-s051
+  scheduler:
+    policy: LEAST_ALLOCATED
+    k8sScoreScale: 0.05
+  controllerTickIntervalSeconds: 1.0
+  nodes:
+    - name: worker-1
+      pes: 8
+      ramMiB: 8192
+      rack: r1
+      zone: oci-1-a
+      region: oci-1
+      costPerHour: 0.10
+      labels: { role: general, zone: a, rack: r1, region: oci-1 }
+    - name: worker-2
+      pes: 8
+      ramMiB: 8192
+      rack: r2
+      zone: oci-1-b
+      region: oci-1
+      costPerHour: 0.10
+      labels: { role: general, zone: b, rack: r2, region: oci-1 }
+    - name: worker-3
+      pes: 8
+      ramMiB: 8192
+      rack: r3
+      zone: oci-1-c
+      region: oci-1
+      costPerHour: 0.10
+      labels: { role: gpu, zone: c, rack: r3, region: oci-1 }
+      taints:
+        - { key: dedicated, value: gpu, effect: NO_SCHEDULE }
+  workload:
+    deployments:
+      - name: bg-web-a
+        namespace: default
+        replicas: 1
+        labels: { app: bg-web }
+        cpuLoadProfile: IDLE_15
+        container:
+          image: nginx:alpine
+          cpu: "100m"
+          memory: "64Mi"
+          length: 1000000
+      - name: bg-locust
+        namespace: default
+        replicas: 1
+        labels: { app: bg-locust }
+        cpuLoadProfile: IDLE_15
+        container:
+          image: locustio/locust
+          cpu: "100m"
+          memory: "64Mi"
+          length: 1000000
+      - name: rq1-s051
+        namespace: default
+        replicas: 1
+        labels: { rq1-scenario: s051 }
+        cpuLoadProfile: IDLE_15
+        nodeAffinity:
+          required:
+            - { key: role, operator: In, values: [gpu] }
+        tolerations:
+          - { key: dedicated, operator: Equal, value: gpu, effect: NO_SCHEDULE }
+        container:
+          image: registry.k8s.io/pause:3.9
+          cpu: "50m"
+          memory: "32Mi"
+          length: 100

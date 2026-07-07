@@ -1,0 +1,4 @@
+metric,real_n,sim_n,value
+pod_count_nrmsd,65,65,0.0894
+node_count_mae,91,91,1.0110
+steady_state_pods_err,13,1,0.0

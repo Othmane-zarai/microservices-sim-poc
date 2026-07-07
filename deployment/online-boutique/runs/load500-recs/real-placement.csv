@@ -1,0 +1,23 @@
+pod,namespace,node,phase,ip
+adservice-694f8f9d68-7nlj5,boutique,k3s-server,Running,10.42.0.135
+cartservice-779ffd977d-tqmqp,boutique,k3s-worker-1,Running,10.42.1.12
+checkoutservice-587fb9cb69-t5gsf,boutique,k3s-worker-1,Running,10.42.1.5
+currencyservice-5f9cf4b58-lz5hk,boutique,k3s-worker-1,Running,10.42.1.6
+emailservice-68ffffd6cf-n2bmp,boutique,k3s-server,Running,10.42.0.130
+frontend-cdc645d59-5hnx5,boutique,k3s-worker-2,Running,10.42.2.23
+frontend-cdc645d59-6nbs7,boutique,<no value>,Pending,<no value>
+frontend-cdc645d59-dhszc,boutique,k3s-server,Running,10.42.0.138
+frontend-cdc645d59-fgh2j,boutique,<no value>,Pending,<no value>
+frontend-cdc645d59-fr5vn,boutique,k3s-worker-2,Running,10.42.2.29
+frontend-cdc645d59-tbmmq,boutique,k3s-server,Running,10.42.0.139
+loadgenerator-6bf799f979-zvwm6,boutique,k3s-worker-1,Running,10.42.1.13
+paymentservice-695b64fbcc-5nfq5,boutique,k3s-server,Running,10.42.0.132
+productcatalogservice-d7f6b447-vspn4,boutique,k3s-worker-1,Running,10.42.1.7
+recommendationservice-c54b85b54-2h8kg,boutique,k3s-worker-2,Running,10.42.2.27
+recommendationservice-c54b85b54-4bpz6,boutique,k3s-server,Running,10.42.0.137
+recommendationservice-c54b85b54-72wz4,boutique,<no value>,Pending,<no value>
+recommendationservice-c54b85b54-lns6j,boutique,k3s-worker-1,Running,10.42.1.9
+recommendationservice-c54b85b54-lqtgb,boutique,<no value>,Pending,<no value>
+recommendationservice-c54b85b54-s85g5,boutique,k3s-worker-2,Running,10.42.2.28
+redis-cart-6899b65948-lp889,boutique,k3s-worker-2,Running,10.42.2.254
+shippingservice-645fc7dcb7-sxslw,boutique,k3s-worker-2,Running,10.42.2.19

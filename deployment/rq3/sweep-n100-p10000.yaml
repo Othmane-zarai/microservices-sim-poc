@@ -1,0 +1,119 @@
+# RQ3 sweep: nodes=100 pods=10000
+cluster:
+  name: rq3-n100-p10000
+  scheduler:
+    policy: COST_OPTIMIZED
+    k8sScoreScale: 0.01
+  controllerTickIntervalSeconds: 1.0
+  nodes:
+    - { name: n00000, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00001, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00002, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00003, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00004, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00005, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00006, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00007, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00008, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00009, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00010, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00011, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00012, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00013, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00014, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00015, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00016, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00017, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00018, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00019, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00020, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00021, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00022, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00023, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00024, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00025, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00026, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00027, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00028, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00029, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00030, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00031, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00032, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00033, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00034, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00035, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00036, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00037, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00038, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00039, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00040, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00041, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00042, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00043, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00044, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00045, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00046, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00047, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00048, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00049, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00050, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00051, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00052, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00053, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00054, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00055, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00056, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00057, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00058, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00059, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00060, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00061, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00062, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00063, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00064, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00065, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00066, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00067, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00068, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00069, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00070, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00071, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00072, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00073, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00074, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00075, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00076, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00077, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00078, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00079, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00080, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00081, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00082, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00083, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00084, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00085, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00086, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00087, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00088, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00089, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00090, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00091, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00092, pes: 16, ramMiB: 32768, rack: r4, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00093, pes: 16, ramMiB: 32768, rack: r5, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00094, pes: 16, ramMiB: 32768, rack: r6, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00095, pes: 16, ramMiB: 32768, rack: r7, zone: z3, region: reg1, costPerHour: 0.10 }
+    - { name: n00096, pes: 16, ramMiB: 32768, rack: r0, zone: z0, region: reg0, costPerHour: 0.10 }
+    - { name: n00097, pes: 16, ramMiB: 32768, rack: r1, zone: z1, region: reg1, costPerHour: 0.10 }
+    - { name: n00098, pes: 16, ramMiB: 32768, rack: r2, zone: z2, region: reg0, costPerHour: 0.10 }
+    - { name: n00099, pes: 16, ramMiB: 32768, rack: r3, zone: z3, region: reg1, costPerHour: 0.10 }
+  workload:
+    deployments:
+      - name: bench
+        namespace: default
+        replicas: 10000
+        cpuLoadProfile: STEADY_50
+        container:
+          image: registry.k8s.io/pause:3.9
+          cpu: "100m"
+          memory: "128Mi"
+          length: 1000

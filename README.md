@@ -13,10 +13,11 @@ It bundles:
   and M/M/c per-service latency.
 - **A headless CLI runner** (`com.example.cspsim`) that discovers and executes
   those examples.
-- **The empirical evaluation** (RQ1–RQ4 + the Google Online Boutique case
-  study), the analysis scripts, the paper sources, and the raw real-vs-sim
-  captures are archived separately as the **Zenodo reproducibility bundle**
-  (see the paper's Data Availability Statement) to keep this repository lean.
+- **The empirical evaluation** — the RQ1–RQ4 + Google Online Boutique deployment
+  kit and raw real-vs-sim captures (`deployment/`), the analysis/comparator
+  scripts (`comparison-scripts/`), and the LaTeX paper sources (`paper/`). These
+  back the paper's Data Availability Statement and are what gets archived to
+  Zenodo; see `ZENODO.md` (deposit guide) and `ARTIFACT.md` (measured manifest).
 
 > This project began as a Spring Boot wrapper exposing *all* upstream
 > `cloudsimplus-examples` over REST. It has been scoped down to only the
@@ -133,6 +134,13 @@ inside the fat jar — nothing extra to set up.
 ├── README.md                                ← this file
 ├── ROADMAP.md                               ← planned HRGO / FL / RL extensions
 ├── CLAUDE.md                                ← repo guidance for Claude Code
+├── LICENSE                                  ← GPL-3.0-or-later (source code)
+├── LICENSE-DATA                             ← CC-BY-4.0 (data under deployment/, paper/)
+├── ARTIFACT.md                              ← measured artifact manifest
+├── ZENODO.md                                ← Zenodo deposit guide
+├── deployment/                              ← RQ1–RQ4 + Online Boutique kit & raw captures
+├── comparison-scripts/                      ← Python/PowerShell metric comparators
+├── paper/                                   ← LaTeX sources + figures
 └── src/
     ├── main/
     │   ├── java/
@@ -226,3 +234,23 @@ every run dump DEBUG logs and the auto-configuration report. This project ships
 Plus also names loggers by *simple class name* (`DatacenterSimple`), so only the
 root level — not `application.properties` or the `org.cloudsimplus` logger —
 silences the engine. Lower root to `INFO`/`DEBUG` there for event tracing.
+
+---
+
+## 9. License
+
+This repository is **dual-licensed** by content type:
+
+- **Source code — GPL-3.0-or-later** (see [`LICENSE`](LICENSE)). The Java
+  sources (`src/`) and the executable comparators/scripts under
+  `comparison-scripts/` and `deployment/` derive from and link against
+  **CloudSim Plus, which is licensed under the GPLv3**, so this repository's
+  code is necessarily GPL-3.0-or-later.
+- **Empirical data & paper — CC-BY-4.0** (see [`LICENSE-DATA`](LICENSE-DATA)).
+  The raw captures and manifests under `deployment/`, the LaTeX paper sources
+  and figures under `paper/`, and the accompanying documentation are licensed
+  under Creative Commons Attribution 4.0.
+
+When in doubt about a given file, the more specific of the two licenses applies.
+See [`ARTIFACT.md`](ARTIFACT.md) for the measured artifact manifest and
+[`ZENODO.md`](ZENODO.md) for how these artifacts are archived to Zenodo.

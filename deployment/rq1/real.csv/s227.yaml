@@ -1,0 +1,21 @@
+# scenario_seed: 594312071
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rq1-s227
+  labels:
+    rq1-scenario: "s227"
+spec:
+  containers:
+    - name: pause
+      image: registry.k8s.io/pause:3.9
+      resources:
+        requests: {cpu: 50m, memory: 32Mi}
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: role
+              operator: In
+              values: ["general"]

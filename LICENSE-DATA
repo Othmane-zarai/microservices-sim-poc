@@ -1,0 +1,59 @@
+CloudSim Plus-K8s — Data & Paper License (non-code artifacts)
+Copyright (c) 2026 Othmane Zarai, Widad Ettazi, Riane Driss
+
+SPDX-License-Identifier: CC-BY-4.0
+
+Scope: this file governs only the NON-CODE reproducibility artifacts committed
+to this repository — the empirical data captures and manifests under
+`deployment/`, the LaTeX paper sources and figures under `paper/`, and the
+accompanying documentation (ARTIFACT.md, ZENODO.md, and the *.md files under
+`deployment/`). These are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+You are free to:
+  - Share  — copy and redistribute the material in any medium or format.
+  - Adapt  — remix, transform, and build upon the material for any purpose,
+             even commercially.
+
+Under the following terms:
+  - Attribution — You must give appropriate credit, provide a link to the
+    license, and indicate if changes were made. You may do so in any reasonable
+    manner, but not in any way that suggests the licensor endorses you or your
+    use.
+  - No additional restrictions — You may not apply legal terms or technological
+    measures that legally restrict others from doing anything the license
+    permits.
+
+The full legal code is available at:
+  https://creativecommons.org/licenses/by/4.0/legalcode
+A human-readable summary is at:
+  https://creativecommons.org/licenses/by/4.0/
+
+How to attribute:
+  Zarai, O., Ettazi, W., & Driss, R. (2026). CloudSim Plus-K8s — Worked examples,
+  CLI runner, and reproducibility artifacts. Zenodo.
+  https://doi.org/10.5281/zenodo.XXXXXXX
+
+--------------------------------------------------------------------------------
+NOTE ON MIXED CONTENT
+--------------------------------------------------------------------------------
+The SOURCE CODE in this repository is licensed under the GNU General Public
+License v3.0-or-later — see the top-level `LICENSE` file. This is required
+because the code derives from and links against CloudSim Plus, which is licensed
+under the GPLv3.
+
+That GPL-3.0-or-later license covers:
+  - the Java sources under `src/` (org.cloudsimplus.examples.kubernetes and the
+    com.example.cspsim CLI runner), and
+  - any executable code included among the reproducibility artifacts (e.g. the
+    Python / PowerShell comparators under `comparison-scripts/` and the shell /
+    manifest scripts under `deployment/`), which are derivatives of, or drive,
+    that GPL-licensed codebase.
+
+CC BY 4.0 (this file) applies to the data, paper text, and documentation as
+scoped above. When in doubt about a given file, the more specific of the two
+licenses applies to it.
+
+The Kubernetes extension itself (org.cloudsimplus.kubernetes) is distributed
+separately under GPL-3.0-or-later at:
+  https://github.com/Othmane-zarai/cloudsimplus-k8s

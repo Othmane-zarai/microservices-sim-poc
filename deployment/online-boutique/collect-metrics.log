@@ -1,0 +1,9 @@
+==> Snapshotting initial pod placement
+    -> real-placement.csv (15 rows)
+==> Capturing HPA state every 5s for 600s
+    -> real-hpa.csv (129 rows)
+==> Pulling loadgenerator latency stats
+Defaulted container "main" out of: main, frontend-check (init)
+    -> real-latency.csv (1 rows)
+==> Final placement re-snapshot
+==> Capture complete.

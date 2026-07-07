@@ -1,0 +1,2 @@
+  Tests: YAML parsing; HPA scaling under dynamic load; ClusterAutoscaler growth.
+❌ VALIDATION FAILED: placement=ok  hpa=ok  ca=FAIL (no extra nodes provisioned)  placedPods=7/2  unschedulable=0

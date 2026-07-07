@@ -1,0 +1,64 @@
+????????????????????????????????????????????????????????????
+?   K8s Cluster from YAML  �  Topology + workload from file ?
+????????????????????????????????????????????????????????????
+  Goal : Load a complete cluster topology, workload, and autoscalers from YAML.
+  Tests: YAML parsing; HPA scaling under dynamic load; ClusterAutoscaler growth.
+  Knobs: config=C:\Users\Administrator\Documents\microservices-sim-poc\deployment\rq1\scenarios-la\s196.yaml  cluster=rq1-s196  nodes=3  duration=120.0s
+
+21:42:55,347 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.18
+21:42:55,355 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - Here is a list of configurators discovered as a service, by rank: 
+21:42:55,355 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
+21:42:55,355 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
+21:42:55,356 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
+21:42:55,362 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 2 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+21:42:55,364 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+21:42:55,365 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+21:42:55,369 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+21:42:55,371 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+21:42:55,371 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 6 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+21:42:55,371 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+21:42:55,372 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+21:42:55,375 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+21:42:55,375 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:nested:/C:/Users/Administrator/Documents/microservices-sim-poc/target/cloudsimplus-k8s-examples-1.0.0-SNAPSHOT.jar/!BOOT-INF/classes/!/logback.xml]
+21:42:55,379 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@343570b7 - Resource [logback.xml] occurs multiple times on the classpath.
+21:42:55,380 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@343570b7 - Resource [logback.xml] occurs at [jar:nested:/C:/Users/Administrator/Documents/microservices-sim-poc/target/cloudsimplus-k8s-examples-1.0.0-SNAPSHOT.jar/!BOOT-INF/classes/!/logback.xml]
+21:42:55,380 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@343570b7 - Resource [logback.xml] occurs at [jar:nested:/C:/Users/Administrator/Documents/microservices-sim-poc/target/cloudsimplus-k8s-examples-1.0.0-SNAPSHOT.jar/!BOOT-INF/lib/cloudsimplus-9.0.0-SNAPSHOT.jar!/logback.xml]
+21:42:55,408 |-INFO in ConfigurationWatchList(mainURL=jar:nested:/C:/Users/Administrator/Documents/microservices-sim-poc/target/cloudsimplus-k8s-examples-1.0.0-SNAPSHOT.jar/!BOOT-INF/classes/!/logback.xml, fileWatchList={}, urlWatchList=[}) - URL [jar:nested:/C:/Users/Administrator/Documents/microservices-sim-poc/target/cloudsimplus-k8s-examples-1.0.0-SNAPSHOT.jar/!BOOT-INF/classes/!/logback.xml] is not of type file
+21:42:55,691 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [STDOUT]
+21:42:55,691 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+21:42:55,712 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+21:42:55,798 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
+21:42:55,798 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - console in production environments, especially in high volume systems.
+21:42:55,798 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also https://logback.qos.ch/codes.html#slowConsole
+21:42:55,799 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.example.cspsim] to INFO
+21:42:55,799 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.springframework.boot.web.embedded.tomcat] to INFO
+21:42:55,799 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.springframework.boot.StartupInfoLogger] to INFO
+21:42:55,799 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to WARN
+21:42:55,800 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [STDOUT] to Logger[ROOT]
+21:42:55,801 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@6bf0219d - End of configuration.
+21:42:55,802 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@dd0c991 - Registering current configuration as safe fallback point
+21:42:55,802 |-INFO in ch.qos.logback.classic.util.ContextInitializer@3943a2be - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 430 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+
+DEBUG getCandidateNodes minScore=0.0670703125 for pod=rq1-s196-0
+DEBUG node=worker-1 score=0.0670703125 diff=0.0
+DEBUG node=worker-2 score=0.0670703125 diff=0.0
+[31mWARN [0;39m CloudSim - Your simulation termination time was set to 2.00 minutes. Current time is 1.85 hour but the last time a Cloudlet has processed was 1.85 hour ago. If you think your simulation is taking to long to finish, maybe it's because you set a too long termination time and new events aren't arriving so far.
+  Final cluster snapshot:
+  ?????????????????????????????????????????????????????????
+  cluster=rq1-s196  nodes=3  pods=3  unschedulable=0
+
+  Deployment desired-replica counts (post-HPA):
+    bg-locust        desiredReplicas=1
+    rq1-s196         desiredReplicas=1
+    bg-web-a         desiredReplicas=1
+
+  Pod ? node placement:
+  POD                NAMESPACE  NODE           RACK   CANDIDATES
+  ?????????????????????????????????????????????????????????????????????????
+  bg-web-a-0         default    worker-1       r1     
+  rq1-s196-0         default    worker-1       r1     worker-1|worker-2
+  bg-locust-0        default    worker-2       r2     
+  ?????????????????????????????????????????????????????????
+  Sim clock : 120.00s   wall: 149 ms
+
+? VALIDATION PASSED: placed 3/3 pods (sanity-only � no HPA / CA declared)

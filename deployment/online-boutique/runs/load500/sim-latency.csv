@@ -1,0 +1,12 @@
+method,path,p50_ms,p95_ms,p99_ms,rps
+GET,/frontend,2.751,10.156,14.805,1155.20
+GET,/cartservice,1.761,7.918,11.893,92.20
+GET,/productcatalogservice,1.702,7.540,11.436,70.05
+GET,/currencyservice,1.799,7.923,12.843,41.00
+GET,/paymentservice,1.718,8.030,12.505,41.00
+GET,/shippingservice,1.841,8.213,14.488,41.00
+GET,/emailservice,1.714,8.282,11.887,20.50
+GET,/checkoutservice,2.463,11.448,17.019,185.60
+GET,/recommendationservice,2.437,8.897,13.863,738.00
+GET,/adservice,2.044,8.213,11.673,41.00
+GET,/redis-cart,1.823,7.741,12.394,20.50

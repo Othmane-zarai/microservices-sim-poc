@@ -1,0 +1,15 @@
+# scenario_seed: 1445662585
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rq1-s014
+  labels:
+    rq1-scenario: "s014"
+spec:
+  containers:
+    - name: pause
+      image: registry.k8s.io/pause:3.9
+      resources:
+        requests: {cpu: 50m, memory: 32Mi}
+  nodeSelector:
+    zone: "a"

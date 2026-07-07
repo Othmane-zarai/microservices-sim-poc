@@ -1,0 +1,20 @@
+# scenario_seed: 1629748727
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rq1-s034
+  labels:
+    rq1-scenario: "s034"
+spec:
+  containers:
+    - name: pause
+      image: registry.k8s.io/pause:3.9
+      resources:
+        requests: {cpu: 50m, memory: 32Mi}
+  nodeSelector:
+    role: "gpu"
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: gpu
+      effect: NoSchedule

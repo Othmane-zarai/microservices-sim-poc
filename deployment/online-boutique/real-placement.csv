@@ -1,0 +1,15 @@
+pod,namespace,node,phase,ip
+adservice-655cddc469-h7prw,default,k3s-server,Running,10.42.0.97
+cartservice-6f659bbff9-c8bct,default,k3s-worker-1,Running,10.42.1.200
+checkoutservice-7bcccb4786-tlphd,default,k3s-worker-2,Running,10.42.2.248
+currencyservice-57cdb6dbcf-tcnsj,default,k3s-server,Running,10.42.0.95
+emailservice-756f6b6479-hcflx,default,k3s-worker-2,Running,10.42.2.249
+frontend-cd685946b-c6d2g,default,k3s-worker-2,Running,10.42.2.247
+loadgenerator-7c789897b-9x6kb,default,k3s-server,Running,10.42.0.98
+paymentservice-5c858b5f6d-rq58k,default,k3s-worker-1,Running,10.42.1.201
+productcatalogservice-8574bcfdfd-hzfh8,default,k3s-worker-1,Running,10.42.1.202
+recommendationservice-55449c6ff8-qsjtm,default,k3s-server,Running,10.42.0.96
+redis-cart-799f48d7bf-wngrl,default,k3s-worker-2,Running,10.42.2.231
+shippingservice-788d8d9d78-f5vwz,default,k3s-worker-1,Running,10.42.1.203
+web-6dfb8f7c74-q9rrs,default,k3s-worker-2,Running,10.42.2.208
+web-6dfb8f7c74-tkklp,default,k3s-server,Running,10.42.0.49

@@ -1,0 +1,16 @@
+pod,namespace,node,phase,ip
+frontend-0,default,k3s-server,RUNNING,10.0.0.0
+cartservice-0,default,k3s-worker-1,RUNNING,10.0.0.1
+productcatalogservice-0,default,k3s-worker-2,RUNNING,10.0.0.2
+currencyservice-0,default,k3s-worker-3,RUNNING,10.0.0.3
+paymentservice-0,default,k3s-server,RUNNING,10.0.0.4
+shippingservice-0,default,k3s-worker-1,RUNNING,10.0.0.5
+emailservice-0,default,k3s-worker-2,RUNNING,10.0.0.6
+checkoutservice-0,default,k3s-worker-3,RUNNING,10.0.0.7
+recommendationservice-0,default,k3s-server,RUNNING,10.0.0.8
+adservice-0,default,k3s-worker-1,RUNNING,10.0.0.9
+redis-cart-0,default,k3s-worker-2,RUNNING,10.0.0.10
+frontend-1,default,k3s-worker-3,RUNNING,10.0.0.11
+recommendationservice-1,default,k3s-worker-3,RUNNING,10.0.0.12
+frontend-2,default,k3s-worker-2,RUNNING,10.0.0.13
+recommendationservice-2,default,k3s-worker-1,RUNNING,10.0.0.14

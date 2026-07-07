@@ -1,0 +1,62 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
++----------------------------------------------------------+
+¦   K8s Cluster from YAML  —  Topology + workload from file ¦
++----------------------------------------------------------+
+  Goal : Load a complete cluster topology, workload, and autoscalers from YAML.
+  Tests: YAML parsing; HPA scaling under dynamic load; ClusterAutoscaler growth.
+  Knobs: config=deployment\rq3\sweep-n10-p500.yaml  cluster=rq3-n10-p500  nodes=10  duration=30.0s
+
+  Final cluster snapshot:
+  ---------------------------------------------------------
+  cluster=rq3-n10-p500  nodes=10  pods=9680  unschedulable=9180
+
+  Deployment desired-replica counts (post-HPA):
+    bench            desiredReplicas=500
+
+  Pod ? node placement:
+  POD                NAMESPACE  NODE           RACK
+  ---------------------------------------------------------
+  bench-0            default    n00000         r0
+  bench-10           default    n00000         r0
+  bench-20           default    n00000         r0
+  bench-30           default    n00000         r0
+  bench-40           default    n00000         r0
+  bench-50           default    n00000         r0
+  bench-60           default    n00000         r0
+  bench-70           default    n00000         r0
+  bench-80           default    n00000         r0
+  bench-90           default    n00000         r0
+  bench-100          default    n00000         r0
+  bench-110          default    n00000         r0
+  bench-120          default    n00000         r0
+  bench-130          default    n00000         r0
+  bench-140          default    n00000         r0
+  bench-150          default    n00000         r0
+  bench-1            default    n00001         r1
+  bench-11           default    n00001         r1
+  bench-21           default    n00001         r1
+  bench-31           default    n00001         r1
+  bench-41           default    n00001         r1
+  bench-51           default    n00001         r1
+  bench-61           default    n00001         r1
+  bench-71           default    n00001         r1
+  bench-81           default    n00001         r1
+  bench-91           default    n00001         r1
+  bench-101          default    n00001         r1
+  bench-111          default    n00001         r1
+  bench-121          default    n00001         r1
+  bench-131          default    n00001         r1
+  ... and 130 more pods
+  ---------------------------------------------------------
+  Sim clock : 30.00s   wall: 40250 ms
+
+? VALIDATION FAILED: placement=FAIL  placedPods=160/500  unschedulable=9180
