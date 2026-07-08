@@ -1,5 +1,7 @@
 # CloudSim Plus-K8s — Examples & Evaluation
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21251746.svg)](https://doi.org/10.5281/zenodo.21251746)
+
 Companion artifact to the paper **"CloudSim Plus-K8s: A Contract-Driven
 Extension for Kubernetes Container Orchestration Simulation"**
 (`paper/kubernetes-cloudsimplus.tex`).
@@ -254,3 +256,21 @@ This repository is **dual-licensed** by content type:
 When in doubt about a given file, the more specific of the two licenses applies.
 See [`ARTIFACT.md`](ARTIFACT.md) for the measured artifact manifest and
 [`ZENODO.md`](ZENODO.md) for how these artifacts are archived to Zenodo.
+
+---
+
+## 10. Citation
+
+This repository is archived on Zenodo. Cite the version you used — **version DOI
+`10.5281/zenodo.21251747`** (git tag `v1.0.1`); the **concept DOI
+`10.5281/zenodo.21251746`** always resolves to the latest version.
+
+> Zarai, O., Ettazi, W., & Driss, R. (2026). *microservices-sim-poc: Worked
+> examples, CLI runner, and reproducibility kit for CloudSim Plus-K8s* (v1.0.0)
+> [Software]. Zenodo. https://doi.org/10.5281/zenodo.21251747
+
+If you use the CloudSim Plus-K8s **extension** itself, also cite the fork
+snapshot: version DOI `10.5281/zenodo.21251757` (concept
+`10.5281/zenodo.21251756`). GitHub can render a formatted citation from
+[`CITATION.cff`](CITATION.cff) via the **Cite this repository** button. The
+accompanying paper is under submission to *Software: Practice and Experience*.

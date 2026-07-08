@@ -163,10 +163,6 @@
     The Kubernetes extension source lives in a public development fork of
     CloudSim Plus; the fork URL and reproducibility artefacts are given in
     the Data Availability Statement.%
-% TODO-ARTEFACT: the deployment kit, comparator scripts, and raw captures
-% must be published (currently in a private repo) and archived to Zenodo,
-% with the DOI substituted at the Section~\ref{sec:conclusions} footnote,
-% before camera-ready submission.
 
     The remainder of the paper is organised as follows.
     Section~\ref{sec:background} reviews CloudSim Plus and
@@ -2486,11 +2482,10 @@ explicitly delineate where formal guarantees do and do not hold. \\
     in-development \texttt{org.cloudsimplus:cloudsimplus:9.0.0-SNAPSHOT}
     line; \emph{no 9.0.0 release is yet published to Maven Central}, where
     the latest public release is \texttt{8.5.7}. For reproducibility, the
-    evaluation reported here was run on JDK~25.0.1 against the fork build;
-    a tagged commit and an archived Zenodo snapshot will be pinned at
-    camera-ready.%
-% TODO: replace with exact commit SHA + Zenodo DOI once a clean, test-passing
-% snapshot of the fork is committed and tagged.
+    evaluation reported here was run on JDK~25.0.1 against the fork build.
+    The exact snapshot is archived on Zenodo at
+    \url{https://doi.org/10.5281/zenodo.21251757} (tag \texttt{v1.0.2},
+    commit \texttt{172e2d9}).
 
 
 %% --- Back matter ---
@@ -2528,12 +2523,13 @@ explicitly delineate where formal guarantees do and do not hold. \\
     artefact for this paper --- the runnable Kubernetes examples, the headless
     CLI runner, the RQ1--RQ4 and Online Boutique deployment kit, the
     comparator scripts (\texttt{comparison-scripts/}), and the raw real-vs-sim
-    captures --- accompanies the manuscript. The evaluation reported here was
-    produced on JDK~25.0.1 against the fork build; the exact tagged commit and
-    an archived Zenodo snapshot (with DOI) will be pinned at camera-ready.%
-% TODO-ARTEFACT: publish the deployment kit + comparator scripts + raw
-% captures, archive to Zenodo, and substitute the commit SHA + DOI here
-% before camera-ready submission.
+    captures --- is archived on Zenodo at
+    \url{https://doi.org/10.5281/zenodo.21251747} (tag \texttt{v1.0.1},
+    commit \texttt{7df3bb5}), while the \texttt{org.cloudsimplus.kubernetes}
+    extension snapshot is archived at
+    \url{https://doi.org/10.5281/zenodo.21251757} (tag \texttt{v1.0.2},
+    commit \texttt{172e2d9}). The evaluation reported here was produced on
+    JDK~25.0.1 against the fork build.
 
     \bibliography{kubernetes-refs}
 
