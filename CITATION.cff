@@ -18,18 +18,15 @@ authors:
     given-names: Widad
   - family-names: Driss
     given-names: Riane
-version: 1.0.0
+version: 1.0.2
 doi: 10.5281/zenodo.21251746
-date-released: "2026-07-07"
+date-released: "2026-07-08"
 license: GPL-3.0-or-later
 repository-code: "https://github.com/Othmane-zarai/microservices-sim-poc"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.21251746"
     description: "Concept DOI (resolves to the latest version)"
-  - type: doi
-    value: "10.5281/zenodo.21251747"
-    description: "Version 1.0.0 (git tag v1.0.1)"
 keywords:
   - CloudSim Plus
   - Kubernetes

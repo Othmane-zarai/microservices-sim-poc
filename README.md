@@ -261,16 +261,15 @@ See [`ARTIFACT.md`](ARTIFACT.md) for the measured artifact manifest and
 
 ## 10. Citation
 
-This repository is archived on Zenodo. Cite the version you used — **version DOI
-`10.5281/zenodo.21251747`** (git tag `v1.0.1`); the **concept DOI
-`10.5281/zenodo.21251746`** always resolves to the latest version.
+This repository is archived on Zenodo. The **concept DOI
+`10.5281/zenodo.21251746`** always resolves to the latest version; each release
+also mints its own version DOI (shown on the record).
 
 > Zarai, O., Ettazi, W., & Driss, R. (2026). *microservices-sim-poc: Worked
-> examples, CLI runner, and reproducibility kit for CloudSim Plus-K8s* (v1.0.0)
-> [Software]. Zenodo. https://doi.org/10.5281/zenodo.21251747
+> examples, CLI runner, and reproducibility kit for CloudSim Plus-K8s* (v1.0.2)
+> [Software]. Zenodo. https://doi.org/10.5281/zenodo.21251746
 
 If you use the CloudSim Plus-K8s **extension** itself, also cite the fork
-snapshot: version DOI `10.5281/zenodo.21251757` (concept
-`10.5281/zenodo.21251756`). GitHub can render a formatted citation from
-[`CITATION.cff`](CITATION.cff) via the **Cite this repository** button. The
+(concept DOI `10.5281/zenodo.21251756`). GitHub can render a formatted citation
+from [`CITATION.cff`](CITATION.cff) via the **Cite this repository** button. The
 accompanying paper is under submission to *Software: Practice and Experience*.
